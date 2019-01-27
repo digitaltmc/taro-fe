@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import './index.scss'
 
@@ -37,12 +37,17 @@ export default class Index extends Component {
       url: '/pages/testForm/index'
     })
   }
+  gotoLogin () {
+    Taro.navigateTo({
+      url: '/pages/login/login'
+    })
+  }
 
   render () {
     return (
       <View className='index'>
         <Text>Hello world!</Text>
-        <AtButton type='primary'>测试登录</AtButton>
+        <AtButton type='primary' onClick={this.gotoLogin}>测试登录</AtButton>
         <AtButton type='primary' onClick={this.testForm} >测试表单</AtButton>
       </View>
     )

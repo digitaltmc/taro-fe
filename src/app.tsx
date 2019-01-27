@@ -22,7 +22,8 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/testMember/index',
-      'pages/testForm/index'
+      'pages/testForm/index',
+      'pages/login/login'
     ],
     window: {
       backgroundTextStyle: 'light',
