@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+// import { AtButton } from 'taro-ui'
 import './index.scss'
 
 export default class Index extends Component {
@@ -16,17 +16,17 @@ export default class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
-  componentWillMount () { }
+  componentWillMount() { }
 
-  componentDidMount () { }
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
-  testForm () {
+  testForm() {
     // // 跳转到目的页面，打开新页面
     // Taro.navigateTo({
     //   url: '/pages/page/path/name'
@@ -37,18 +37,18 @@ export default class Index extends Component {
       url: '/pages/testForm/index'
     })
   }
-  gotoLogin () {
+  gotoLogin() {
     Taro.navigateTo({
       url: '/pages/login/login'
     })
   }
 
-  render () {
+  render() {
     return (
       <View className='index'>
         <Text>Hello world!</Text>
-        <AtButton type='primary' onClick={this.gotoLogin}>测试登录</AtButton>
-        <AtButton type='primary' onClick={this.testForm} >测试表单</AtButton>
+        <Button type='primary' onClick={this.gotoLogin}>测试登录</Button>
+        <Button type='primary' onClick={this.testForm} >测试表单</Button>
       </View>
     )
   }
