@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Input, Button, Form } from '@tarojs/components'
 import './login.scss'
-
+import { AtButton } from 'taro-ui'
 export default class Index extends Component {
   weburl: String = "http://digitaltmc-digitaltmc1.7e14.starter-us-west-2.openshiftapps.com/digitaltmc/";
   constructor() {
@@ -20,10 +20,11 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '登录'
   }
 
-  componentWillMount() { }
+  componentWillMount() {  
+  }
 
   componentDidMount() { }
 
@@ -34,47 +35,64 @@ export default class Index extends Component {
   componentDidHide() { }
 
   loginHandler() {
-    Taro.login().then(res => {
-      if (res.code) {
-        //发起网络请求
-        Taro.request({
-          url: this.weburl + "auth",
-          data: {
-            code: res.code
-          }
-        }).then(res => {
-          if (res.data) {
-            //获取到用户凭证 存儲 3rd_session
-            //var json = JSON.parse(res.data.Data)
-            Taro.setStorage({
-              key: "third_Session",
-              data: res.data
-              //data: json.third_Session
-            })
-            //getUserInfo()
-          }
-          else {
-
-          }
-
-        })
-      }
-    })
+    // //TO-DO 根据后端内容需要调整
+    // Taro.login().then(res => {
+    //   if (res.code) {
+    //     //发起网络请求
+    //     Taro.request({
+    //       url: this.weburl + "auth",
+    //       data: {
+    //         code: res.code
+    //       }
+    //     }).then(res => {
+    //       if (res.data) {
+    //         //获取到用户凭证 存儲 3rd_session
+    //         //var json = JSON.parse(res.data.Data)
+    //         Taro.setStorage({
+    //           key: "third_Session",
+    //           data: res.data
+    //           //data: json.third_Session
+    //         })
+    //         //getUserInfo()
+    //       }
+    //     })
+    //   }
+    // })
+  }
+  getUserInfo(userInfo){
+    if(userInfo.detail.userInfo){
+        Taro.setStorage(
+            {key: "userInfo", data: userInfo.detail.userInfo}
+        ).then( () => {
+            Taro.navigateBack()
+        }) 
+    }
   }
 
   render() {
-    return (
-
-      <View className='doc-body'>
-
-        <View className='panel'>
-          <View className='panel__title'>注册</View>
-          <View className='panel__content no-padding'>
+    let loginElement = null;
+    if (Taro.getEnv() == Taro.ENV_TYPE.WEAPP){
+        loginElement = (
             <View className='component-item'>
-              <Input name='username' title='用户名' placeholder='邮箱' value={this.state.username} onChange={this.handleInput.bind(this, 'username')} />
-              <Input name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.pwd} onChange={this.handleInput.bind(this, 'pwd')} />
-              <Button type='primary' onClick={this.loginHandler}>登录</Button>
+                <Text className='component-item__text'>申请获取你的公开信息（昵称、头像等）</Text>
+                <AtButton type='primary' open-type='getUserInfo' onGetUserInfo={this.getUserInfo}>微信登录</AtButton>
             </View>
+        )
+    }else if(Taro.getEnv() == Taro.ENV_TYPE.WEB){
+        loginElement = (
+            <View className='component-item'>
+                <Input name='username' title='用户名' placeholder='邮箱' value={this.state.username} onChange={this.handleInput.bind(this, 'username')} />
+                <Input name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.pwd} onChange={this.handleInput.bind(this, 'pwd')} />
+                <AtButton type='primary' onClick={this.loginHandler}>登录</AtButton>
+            </View>
+        )
+    }
+    return (
+      <View className='doc-body'>
+        <View className='panel'>
+          <View className='panel__title'>登录</View>
+          <View className='panel__content no-padding'>
+            {loginElement}
           </View>
         </View>
       </View>
