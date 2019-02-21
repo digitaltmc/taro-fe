@@ -1,11 +1,21 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Picker } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { AtButton, AtTabBar } from 'taro-ui'
 import './index.scss'
 import MeetingHeader from '../components/meeting-header';
 import BookForm from '../components/book-form';
-import requestWithLogin from '../../utils/requestsWithLogin'
+import { withLogin } from '../../utils/requestsWithLogin'
 import mockData from '../../utils/mockData'
+// function withLogin(target, name, descriptor) {
+//     var oldValue = descriptor.value;
+  
+//     descriptor.value = function() {
+//       console.log('need login o');
+//       return oldValue.apply(null, arguments);
+//     };
+  
+//     return descriptor;
+//   }
 export default class Index extends Component {
 
   constructor() {
@@ -72,18 +82,25 @@ export default class Index extends Component {
         bookInfo: bookInfo
     })
   }
-
+  @withLogin
   onClickBooking(role, operation) {
     //TO-DO
-    Taro.getStorage({key:'userInfo'}).then(rst => {   //从缓存中获取用户信息
-      let user = {name: rst.data.nickName, avatar: rst.data.avatarUrl}
+    console.log("step in onClickBooking")
+    let rst = Taro.getStorageSync('userInfo')
+    console.log("get userinfo from storage in onClickBooking")
+    if(rst){
+      let user = {name: rst.nickName, avatar: rst.avatarUrl}
       this.booking(user, role, operation)
-    }).catch (e =>{
-      //TO-DO 如何登录回来后自动预定
-      requestWithLogin.login().then( userInfo => {
-        if(userInfo)this.booking(userInfo, role, operation)
-      })
-    })
+    }
+    // Taro.getStorage({key:'userInfo'}).then(rst => {   //从缓存中获取用户信息
+    //   let user = {name: rst.data.nickName, avatar: rst.data.avatarUrl}
+    //   this.booking(user, role, operation)
+    // }).catch (e =>{
+    //   //TO-DO 如何登录回来后自动预定
+    //   login().then( userInfo => {
+    //     if(userInfo)this.booking(userInfo, role, operation)
+    //   })
+    // })
   }
 
   onChange = e => {
@@ -113,6 +130,16 @@ export default class Index extends Component {
             <BookForm bookItems = {bookItems} onClickBooking={this.onClickBooking.bind(this)}> </BookForm>
           </View>
         </View>
+        <AtTabBar
+          fixed
+          tabList={[
+            { title: '预定', iconType: 'bullet-list', text: 'aa' },
+            { title: '我的', iconType: 'camera' }
+          ]}
+          onClick={this.handleClick.bind(this)}
+          current={this.state.current}
+        />
+
       </View>
     )
   }
