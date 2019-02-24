@@ -67,7 +67,7 @@ export default {
           return {name: userInfo.userInfo.nickName, avatar: userInfo.userInfo.avatarUrl}
         }catch (error) {
           Taro.navigateTo({
-            url: '/pages/login/login'
+            url: '/pages/register/register'
           })
           return null;
         }      
@@ -78,6 +78,9 @@ export default {
     //     this.props.setBasicInfo(rst.data)
     //   })
     }
+  },
+  getUserInfo() {
+    return Taro.getStorageSync("userInfo")
   }
 //  login() {
 //     if (Taro.getEnv() == Taro.ENV_TYPE.WEAPP){
