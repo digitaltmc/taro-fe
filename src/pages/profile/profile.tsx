@@ -59,40 +59,6 @@ export default class Index extends Component {
 
   componentDidHide() { }
 
-  loginHandler() {
-    // //TO-DO 根据后端内容需要调整
-    // Taro.login().then(res => {
-    //   if (res.code) {
-    //     //发起网络请求
-    //     Taro.request({
-    //       url: this.weburl + "auth",
-    //       data: {
-    //         code: res.code
-    //       }
-    //     }).then(res => {
-    //       if (res.data) {
-    //         //获取到用户凭证 存儲 3rd_session
-    //         //var json = JSON.parse(res.data.Data)
-    //         Taro.setStorage({
-    //           key: "third_Session",
-    //           data: res.data
-    //           //data: json.third_Session
-    //         })
-    //         //getUserInfo()
-    //       }
-    //     })
-    //   }
-    // })
-  }
-  // getUserInfo(userInfo){
-  //   if(userInfo.detail.userInfo){
-  //       Taro.setStorage(
-  //           {key: "userInfo", data: userInfo.detail.userInfo}
-  //       ).then( () => {
-  //           Taro.navigateBack()
-  //       }) 
-  //   }
-  // }
   handleLogin(){
     requestWithLogin.login()
   }
@@ -108,8 +74,8 @@ export default class Index extends Component {
           <View className='panel__title'>用户信息</View>
           <View className='panel__content'>
             <View className='component-item'>
-              <AtInput name='nickname' title='昵称' type='text' value={this.state.userInfo.nickName} onChange={this.handleInput.bind(this, 'nickName')} />
-              <AtInput name='phone' title='手机' type='phone' value={this.state.phone} onChange={this.handleInput.bind(this, 'phone')} />
+              <AtInput name='nickname' title='昵称' type='text' value={this.state.userInfo.nickName} />
+              <AtInput name='phone' title='手机' type='phone' value={this.state.phone} />
             </View>
           </View>
         </View>
