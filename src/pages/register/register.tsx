@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Input, Button, Form } from '@tarojs/components'
-import './login.scss'
+import './register.scss'
 import { AtButton, AtInput } from 'taro-ui'
 export default class Index extends Component {
   weburl: String = "http://digitaltmc-digitaltmc1.7e14.starter-us-west-2.openshiftapps.com/digitaltmc/";
@@ -20,7 +20,7 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '登录'
+    navigationBarTitleText: '注册'
   }
 
   componentWillMount() {  
@@ -33,16 +33,6 @@ export default class Index extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
 
   loginHandler() {
     // //TO-DO 根据后端内容需要调整
@@ -69,11 +59,6 @@ export default class Index extends Component {
     //   }
     // })
   }
-  registerHandler() {
-    Taro.redirectTo({
-      url: '/pages/register/register'
-    })
-  }
   getUserInfo(userInfo){
     if(userInfo.detail.userInfo){
         Taro.setStorage(
@@ -86,29 +71,31 @@ export default class Index extends Component {
 
   render() {
     let loginElement = null;
-    //此页面目前只有h5需要登陆, 微信目前不会访问到此页面(微信只需注册)
     if (Taro.getEnv() == Taro.ENV_TYPE.WEAPP){
         loginElement = (
             <View className='component-item'>
-                <Text className='component-item__text'>申请获取你的公开信息（昵称、头像等）</Text>
-                <AtButton type='primary' open-type='getUserInfo' onGetUserInfo={this.getUserInfo}>微信登录</AtButton>
+                <AtButton type='primary' open-type='getUserInfo' onGetUserInfo={this.getUserInfo}>微信注册</AtButton>
             </View>
         )
     }else if(Taro.getEnv() == Taro.ENV_TYPE.WEB){
         loginElement = (
             <View className='component-item'>
-                <AtInput name='username' title='用户名' placeholder='邮箱' value={this.state.username} onChange={this.handleInputChange} />
-                <AtInput name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.pwd} onChange={this.handleInputChange} />
-                <AtButton type='primary' onClick={this.loginHandler}>登录</AtButton>
-                <AtButton type='primary' onClick={this.registerHandler}>注册</AtButton>
+                <AtInput name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.password} />
+                <AtInput name='passwordcon' title='重复密码' type='password' placeholder='密码不少于6位数' value={this.state.passwordcon}/>         
+                <AtButton type='primary' onClick={this.loginHandler}>注册</AtButton>
             </View>
         )
     }
     return (
       <View className='doc-body'>
         <View className='panel'>
-          <View className='panel__title'>登录</View>
+          <View className='panel__title'>注册</View>
           <View className='panel__content no-padding'>
+            <View className='component-item'>
+                <AtInput name='email' title='邮箱' type='text' placeholder='输入邮箱' value={this.state.email} />
+                <AtInput name='phone' title='手机' type='phone' placeholder='输入11位手机号码' value={this.state.phone} />
+                <AtInput name='username' title='昵称' placeholder='昵称会显示在预定界面上' value={this.state.username} />
+            </View>
             {loginElement}
           </View>
         </View>

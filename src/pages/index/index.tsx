@@ -3,6 +3,7 @@ import { View, Picker } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import './index.scss'
 import MeetingHeader from '../components/meeting-header';
+import TabBar from '../components/tab-bar'
 import BookForm from '../components/book-form';
 import requestWithLogin from '../../utils/requestsWithLogin'
 import mockData from '../../utils/mockData'
@@ -113,6 +114,7 @@ export default class Index extends Component {
             <BookForm bookItems = {bookItems} onClickBooking={this.onClickBooking.bind(this)}> </BookForm>
           </View>
         </View>
+        <TabBar currentPage = "index" />
       </View>
     )
   }
