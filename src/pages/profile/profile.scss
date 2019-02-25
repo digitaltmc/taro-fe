@@ -7,3 +7,11 @@
         line-height: 3;
     }
 }
+.avatar-panel{
+  width: 100vw;
+  height: 32vw;
+  text-align: center;
+  &__avatar{
+    margin:0 auto;
+  }
+}

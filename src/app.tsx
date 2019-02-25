@@ -2,6 +2,8 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import Index from './pages/index'
 
 import './app.scss'
+import 'taro-ui/dist/style/index.scss'
+import '@tarojs/async-await'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -23,14 +25,28 @@ class App extends Component {
       'pages/index/index',
       'pages/testMember/index',
       'pages/testForm/index',
-      'pages/login/login'
+      'pages/login/login',
+      'pages/register/register',
+      'pages/profile/profile'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
-    }
+    },
+    // tabBar: {
+    //   list: [{
+    //     "pagePath": "pages/index/index",  
+    //     "text": "首页"  
+    //   }, {
+    //     "pagePath": "pages/login/login",  
+    //     "text": "我的"  
+    //   },{
+    //     "pagePath": "pages/login/login",  
+    //     "text": "我的"  
+    //   }]
+    // }
   }
 
   componentDidMount () {}

@@ -69,6 +69,7 @@ const config = {
     esnextModules: ['taro-ui'],
     publicPath: '/',
     staticDirectory: 'static',
+    esnextModules: ['taro-ui'],
     module: {
       postcss: {
         autoprefixer: {
