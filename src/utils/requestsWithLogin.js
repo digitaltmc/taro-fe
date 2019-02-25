@@ -84,6 +84,9 @@ export default {
     //   })
     }
   },
+  logout() {
+    Taro.removeStorageSync("userInfo")
+  },
   getUserInfo() {
     return Taro.getStorageSync("userInfo")
   }

@@ -94,7 +94,7 @@ export default class Index extends Component {
             <View className='component-item'>
                 <AtInput name='email' title='邮箱' type='text' placeholder='输入邮箱' value={this.state.email} />
                 <AtInput name='phone' title='手机' type='phone' placeholder='输入11位手机号码' value={this.state.phone} />
-                <AtInput name='username' title='昵称' placeholder='昵称会显示在预定界面上' value={this.state.username} />
+                <AtInput name='username' title='姓名' placeholder='姓名会显示在预定界面上' value={this.state.username} />
             </View>
             {loginElement}
           </View>

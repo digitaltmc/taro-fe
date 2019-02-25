@@ -60,7 +60,18 @@ export default class Index extends Component {
   componentDidHide() { }
 
   handleLogin(){
-    requestWithLogin.login()
+    requestWithLogin.login().then( rst => {
+      this.setState({
+        islogin: true
+      })
+    })
+  }
+
+  handleLogout(){
+    requestWithLogin.logout()
+    this.setState({
+      islogin: false
+    })
   }
 
   render() {
@@ -74,8 +85,13 @@ export default class Index extends Component {
           <View className='panel__title'>用户信息</View>
           <View className='panel__content'>
             <View className='component-item'>
-              <AtInput name='nickname' title='昵称' type='text' value={this.state.userInfo.nickName} />
+              <AtInput name='username' title='姓名' type='text' value={this.state.userInfo.nickName} />
               <AtInput name='phone' title='手机' type='phone' value={this.state.phone} />
+            </View>
+          </View>
+          <View className='panel__content'>
+            <View className='component-item'>
+            <AtButton type='primary' onClick={this.handleLogout}>登出</AtButton>
             </View>
           </View>
         </View>
