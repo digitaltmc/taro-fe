@@ -74,14 +74,14 @@ export default class Index extends Component {
     if (Taro.getEnv() == Taro.ENV_TYPE.WEAPP){
         loginElement = (
             <View className='component-item'>
-                <AtInput name='username' title='昵称' placeholder='如果不填写默认为微信昵称' value={this.state.nickname} onChange={this.handleInput.bind(this, 'username')} />
                 <AtButton type='primary' open-type='getUserInfo' onGetUserInfo={this.getUserInfo}>微信注册</AtButton>
             </View>
         )
     }else if(Taro.getEnv() == Taro.ENV_TYPE.WEB){
         loginElement = (
             <View className='component-item'>
-                <Input name='username' title='昵称' placeholder='昵称会显示在预定界面上' value={this.state.username} onChange={this.handleInput.bind(this, 'username')} />
+                <AtInput name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.password} />
+                <AtInput name='passwordcon' title='重复密码' type='password' placeholder='密码不少于6位数' value={this.state.passwordcon}/>         
                 <AtButton type='primary' onClick={this.loginHandler}>注册</AtButton>
             </View>
         )
@@ -92,10 +92,9 @@ export default class Index extends Component {
           <View className='panel__title'>注册</View>
           <View className='panel__content no-padding'>
             <View className='component-item'>
-                <AtInput name='email' title='邮箱' type='text' placeholder='输入邮箱' value={this.state.email} onChange={this.handleInput.bind(this, 'email')} />
-                <AtInput name='phone' title='手机' type='phone' placeholder='输入11位手机号码' value={this.state.phone} onChange={this.handleInput.bind(this, 'phone')} />
-                <AtInput name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.password} onChange={this.handleInput.bind(this, 'password')} />
-                <AtInput name='passwordcon' title='重复密码' type='password' placeholder='密码不少于6位数' value={this.state.passwordcon} onChange={this.handleInput.bind(this, 'passwordcon')} />
+                <AtInput name='email' title='邮箱' type='text' placeholder='输入邮箱' value={this.state.email} />
+                <AtInput name='phone' title='手机' type='phone' placeholder='输入11位手机号码' value={this.state.phone} />
+                <AtInput name='username' title='昵称' placeholder='昵称会显示在预定界面上' value={this.state.username} />
             </View>
             {loginElement}
           </View>

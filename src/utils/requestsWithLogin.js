@@ -70,9 +70,14 @@ export default {
             url: '/pages/register/register'
           })
           return null;
-        }      
+        }
     }else if(Taro.getEnv() == Taro.ENV_TYPE.WEB){
-        return {}
+      let userInfo = this.getUserInfo()
+      if (!userInfo){
+        Taro.navigateTo({
+          url: '/pages/login/login'
+        })
+      }
       //TO-DO
     //   Taro.getStorage({key:'userInfo'}).then(rst => {   //从缓存中获取用户信息
     //     this.props.setBasicInfo(rst.data)

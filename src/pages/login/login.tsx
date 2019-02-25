@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Input, Button, Form } from '@tarojs/components'
 import './login.scss'
-import { AtButton } from 'taro-ui'
+import { AtButton, AtInput } from 'taro-ui'
 export default class Index extends Component {
   weburl: String = "http://digitaltmc-digitaltmc1.7e14.starter-us-west-2.openshiftapps.com/digitaltmc/";
   constructor() {
@@ -34,6 +34,16 @@ export default class Index extends Component {
 
   componentDidHide() { }
 
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
   loginHandler() {
     // //TO-DO 根据后端内容需要调整
     // Taro.login().then(res => {
@@ -59,6 +69,11 @@ export default class Index extends Component {
     //   }
     // })
   }
+  registerHandler() {
+    Taro.redirectTo({
+      url: '/pages/register/register'
+    })
+  }
   getUserInfo(userInfo){
     if(userInfo.detail.userInfo){
         Taro.setStorage(
@@ -71,6 +86,7 @@ export default class Index extends Component {
 
   render() {
     let loginElement = null;
+    //此页面目前只有h5需要登陆, 微信目前不会访问到此页面(微信只需注册)
     if (Taro.getEnv() == Taro.ENV_TYPE.WEAPP){
         loginElement = (
             <View className='component-item'>
@@ -81,9 +97,10 @@ export default class Index extends Component {
     }else if(Taro.getEnv() == Taro.ENV_TYPE.WEB){
         loginElement = (
             <View className='component-item'>
-                <Input name='username' title='用户名' placeholder='邮箱' value={this.state.username} onChange={this.handleInput.bind(this, 'username')} />
-                <Input name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.pwd} onChange={this.handleInput.bind(this, 'pwd')} />
+                <AtInput name='username' title='用户名' placeholder='邮箱' value={this.state.username} onChange={this.handleInputChange} />
+                <AtInput name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.pwd} onChange={this.handleInputChange} />
                 <AtButton type='primary' onClick={this.loginHandler}>登录</AtButton>
+                <AtButton type='primary' onClick={this.registerHandler}>注册</AtButton>
             </View>
         )
     }
