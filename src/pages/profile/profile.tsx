@@ -27,7 +27,7 @@ export default class Index extends Component {
 
   componentWillMount() { 
     const userInfo = requestWithLogin.getUserInfo()
-    if (userInfo){
+    if (requestWithLogin.isLogin()){
       this.setState({
         userInfo: userInfo,
         islogin: true
@@ -45,7 +45,7 @@ export default class Index extends Component {
 
   componentDidShow() { 
     const userInfo = requestWithLogin.getUserInfo()
-    if (userInfo){
+    if (requestWithLogin.isLogin()){
       this.setState({
         userInfo: userInfo,
         islogin: true
@@ -60,10 +60,24 @@ export default class Index extends Component {
   componentDidHide() { }
 
   handleLogin(){
-    requestWithLogin.login().then( rst => {
+    requestWithLogin.withLogin().then( rst => {
       this.setState({
         islogin: true
       })
+    })
+  }
+
+  handleTest(){
+    requestWithLogin.post( "graphql",
+      JSON.stringify({"query":"{hello}"})
+    ).then(res => {
+      Taro.showModal ({
+        title: 'success',
+        content: res.data.data.hello
+      })
+    }).catch (e => {
+      console.log("this is error")
+      console.log(e.errMsg)
     })
   }
 
@@ -104,6 +118,7 @@ export default class Index extends Component {
           <View className='panel__content'>
             <View className='component-item'>
               <AtButton type='primary' onClick={this.handleLogin}>登陆</AtButton>
+              <AtButton type='primary' onClick={this.handleTest}>测试连接后端</AtButton>
             </View>
           </View>
         </View>
