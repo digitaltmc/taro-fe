@@ -26,7 +26,7 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '预定会议角色'
+    navigationBarTitleText: '会议预订'
   }
 
   componentWillMount() {
@@ -52,7 +52,15 @@ export default class Index extends Component {
   componentDidHide() { console.log("componentDidHide")}
   
   getMeetings() {
-    // TO-DO
+    Taro.request({
+      url: 'https://dt-be.herokuapp.com/graphql',
+      data:  JSON.stringify({query: "{hello}"}),
+      header: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+      .then(res => console.log(res.data))
     return mockData.meetings
   }
   getBookInfo (meetingId) {
@@ -80,7 +88,7 @@ export default class Index extends Component {
       let user = {name: rst.data.nickName, avatar: rst.data.avatarUrl}
       this.booking(user, role, operation)
     }).catch (e =>{
-      //TO-DO 如何登录回来后自动预定
+      //TO-DO 如何登录回来后自动预订
       requestWithLogin.login().then( userInfo => {
         if(userInfo)this.booking(userInfo, role, operation)
       })
@@ -98,18 +106,16 @@ export default class Index extends Component {
     return (   
       <View className='page'>
         {/* S Header */}
-        <MeetingHeader title='SAP Labs China Toastermaster' desc='regular meeting'></MeetingHeader>
+        <MeetingHeader title='Toastermaster 会议预订' desc=''></MeetingHeader>
         <View className='panel'>
-          <View className='panel__title'>会议时间</View>
           <View className='panel__content'>
             <Picker mode='selector' range={this.state.meetings} rangeKey="meetingDate" onChange={this.onChange}>
             <View className='demo-list-item'>
-                    <View className='demo-list-item__label'>选择会议时间</View>
+                    <View className='demo-list-item__label'>会议时间</View>
                     <View className='demo-list-item__value'>{this.state.currentMeeting.meetingDate}</View>
                   </View>
             </Picker>
           </View>
-          <View className='panel__title'>预定角色</View>
           <View className='panel__content'>
             <BookForm bookItems = {bookItems} onClickBooking={this.onClickBooking.bind(this)}> </BookForm>
           </View>

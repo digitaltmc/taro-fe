@@ -1,9 +1,9 @@
 @import "~taro-ui/dist/style/index.scss";
 .demo-list-item {
-    position: relative;
+    // position: relative;
     display: flex;
     justify-content: space-between;
-    padding: 24px;
+    // padding: 24px;
   
     &::before,
     &::after {
@@ -27,8 +27,9 @@
   
     &__label,
     &__value {
-      color: #333;
-      font-size: 32px;
+      color: #7F7F7F;
+      font-size: 0.68267rem;
+      font-weight: bold;
       line-height: 1.5;
     }
   

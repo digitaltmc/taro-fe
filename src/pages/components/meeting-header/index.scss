@@ -1,16 +1,16 @@
 
 @import "~taro-ui/dist/style/index.scss";
-.doc-header {
+.header-content {
   width: 100vw;
-  height: 32vw;
-  padding-top: 20%;
-  text-align: center;
+  height: 12vw;
+  padding-top: 5%;
   background-color: $color-brand-light;
 
   &__title {
     color: #ffffff;
     font-size: 42px;
     font-weight: bold;
+    text-align: center;
     line-height: 1.5;
   }
 
@@ -18,10 +18,11 @@
     margin-top: 12px;
     color: #ffffff;
     font-size: 30px;
+    text-align: center;
     line-height: 1.5;
   }
-}
-.img-header {
-  width: 100vw;
-  height: 32vw;
+  &__img {
+    width: 3.632rem;
+    padding-left: 5%;
+  }
 }
