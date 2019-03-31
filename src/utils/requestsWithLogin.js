@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
-//import isWeChatApp from './isWechatApp.js'
+import ApolloClient from "apollo-boost"
+import gql from "graphql-tag"
 export const base = "http://localhost:58080/";
 export const HTTP_STATUS = {
     SUCCESS: 200,
@@ -12,6 +13,16 @@ export const HTTP_STATUS = {
     SERVICE_UNAVAILABLE: 503,
     GATEWAY_TIMEOUT: 504
 }
+export const client = new ApolloClient({  
+    uri: base + "graphql"
+});
+
+export const QUERY_LOGIN = gql`  
+    query Login( $user: String!, $password: String! ) {
+        login( user: $user, password: $password )
+    }
+`
+
   // // 获取微信登录凭证
   // export const wxLogin = async () => {
   //   try {

@@ -2,6 +2,8 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Input, Button, Form } from '@tarojs/components'
 import './login.scss'
 import { AtButton, AtInput } from 'taro-ui'
+import { client,QUERY_LOGIN }  from '../../utils/requestsWithLogin'
+
 export default class Index extends Component {
   weburl: String = "http://digitaltmc-digitaltmc1.7e14.starter-us-west-2.openshiftapps.com/digitaltmc/";
   constructor() {
@@ -45,6 +47,19 @@ export default class Index extends Component {
   }
 
   loginHandler() {
+    debugger;
+    client.query({
+        query: QUERY_LOGIN,
+        variables: {
+            user: "aaa@aaa.com",
+            password: "password"
+        }
+    }).then((data)=>{
+        debugger;
+        console.warn('------', data);
+    }).catch((e) => {
+        debugger;
+    })
     // //TO-DO 根据后端内容需要调整
     // Taro.login().then(res => {
     //   if (res.code) {
@@ -99,7 +114,7 @@ export default class Index extends Component {
             <View className='component-item'>
                 <AtInput name='username' title='用户名' placeholder='邮箱' value={this.state.username} onChange={this.handleInputChange} />
                 <AtInput name='password' title='密码' type='password' placeholder='密码不少于6位数' value={this.state.pwd} onChange={this.handleInputChange} />
-                <AtButton type='primary' onClick={this.loginHandler}>登录</AtButton>
+                <AtButton type='primary' onClick={this.loginHandler.bind(this)}>登录</AtButton>
                 <AtButton type='primary' onClick={this.registerHandler}>注册</AtButton>
             </View>
         )
