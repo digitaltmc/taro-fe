@@ -1,30 +1,31 @@
 import Taro from '@tarojs/taro'
-import { AtForm, AtInput, AtButton } from 'taro-ui'
+import { Form, Input, Button } from '@tarojs/components'
+
 export default class Index extends Taro.Component {
-  constructor () {
+  constructor() {
     super(...arguments)
     this.state = {
       value: ''
     }
   }
-  handleChange (value) {
+  handleChange(value) {
     this.setState({
       value
     })
   }
-  onSubmit (event) {
+  onSubmit(event) {
     console.log(event)
   }
-  onReset (event) {
+  onReset(event) {
     console.log(event)
   }
-  render () {
+  render() {
     return (
-      <AtForm
+      <Form
         onSubmit={this.onSubmit.bind(this)}
         onReset={this.onReset.bind(this)}
       >
-        <AtInput
+        <Input
           name='value'
           title='文本'
           type='text'
@@ -32,9 +33,9 @@ export default class Index extends Taro.Component {
           value={this.state.value}
           onChange={this.handleChange.bind(this)}
         />
-        <AtButton formType='submit'>提交</AtButton>
-        <AtButton formType='reset'>重置</AtButton>
-      </AtForm>
+        <Button formType='submit'>提交</Button>
+        <Button formType='reset'>重置</Button>
+      </Form>
     )
   }
 }
