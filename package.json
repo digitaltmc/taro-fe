@@ -4,6 +4,7 @@
 	"private": true,
 	"description": "digitaltmc",
 	"scripts": {
+    "build": "npm run build:h5",
 		"build:weapp": "taro build --type weapp",
 		"build:swan": "taro build --type swan",
 		"build:alipay": "taro build --type alipay",
@@ -17,7 +18,7 @@
 		"dev:h5": "npm run build:h5 -- --watch",
 		"dev:rn": "npm run build:rn -- --watch"
 	},
-	"author": "",
+	"author": "dtmc",
 	"license": "MIT",
 	"dependencies": {
 		"@tarojs/async-await": "1.2.13",
