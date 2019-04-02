@@ -54,6 +54,7 @@ export default class Index extends Component {
   getMeetings() {
     Taro.request({
       url: 'https://dt-be.herokuapp.com/graphql',
+      // method: "POST",
       data:  JSON.stringify({query: "{hello}"}),
       header: {
         'Content-type': 'application/json',
