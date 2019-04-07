@@ -81,7 +81,7 @@ export default class Index extends Component {
       this.booking(user, role, operation)
     }).catch (e =>{
       //TO-DO 如何登录回来后自动预定
-      requestWithLogin.login().then( userInfo => {
+      requestWithLogin.withLogin().then( userInfo => {
         if(userInfo)this.booking(userInfo, role, operation)
       })
     })
