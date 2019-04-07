@@ -13,15 +13,6 @@ export const HTTP_STATUS = {
     SERVICE_UNAVAILABLE: 503,
     GATEWAY_TIMEOUT: 504
 }
-export const client = new ApolloClient({  
-    uri: base + "graphql"
-});
-
-export const QUERY_LOGIN = gql`  
-    query Login( $user: String!, $password: String! ) {
-        login( user: $user, password: $password )
-    }
-`
 
   // // 获取微信登录凭证
   // export const wxLogin = async () => {
@@ -93,7 +84,8 @@ export default {
   isLogin(){
     const userInfo = this.getUserInfo()
     const token = this.getToken()
-    return userInfo && token
+    //TO-DO add token check here
+    return userInfo || token
   },
   logout() {
     Taro.removeStorageSync("userInfo")
