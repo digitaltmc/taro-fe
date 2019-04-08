@@ -34,7 +34,12 @@ export const client = new ApolloClient({
 
 export const QUERY_LOGIN = gql`  
     query Login( $user: String!, $password: String! ) {
-        login( user: $user, password: $password )
+        login( user: $user, password: $password ){
+            id
+            name
+            mobile
+            email
+        }
     }
 `
 export const MUTATION_REGISTER = gql`  

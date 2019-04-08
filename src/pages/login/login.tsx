@@ -67,14 +67,14 @@ export default class Index extends Component {
               password: pwd
           }
       }).then((data)=>{
-        const userid = data.data.login;
-        if (userid === null || userid === "0") {
+        const userInfo = data.data.login;
+        if (userInfo === null) {
           this.setState({
             text: "用户名或密码不正确"
           });
         }else{
           Taro.setStorage(
-              {key: "userInfo", data: {'userid': userid}}
+              {key: "userInfo", data: userInfo}
           ).then( () => {
               Taro.navigateBack()
           })
@@ -93,11 +93,15 @@ export default class Index extends Component {
   }
   getUserInfo(userInfo){
     if(userInfo.detail.userInfo){
-        Taro.setStorage(
-            {key: "userInfo", data: userInfo.detail.userInfo}
-        ).then( () => {
-            Taro.navigateBack()
-        }) 
+      const user= {
+        name: userInfo.detail.userInfo.nickName,
+        avatar: userInfo.detail.userInfo.avatarUrl
+      }
+      Taro.setStorage(
+          {key: "userInfo", data: user}
+      ).then( () => {
+          Taro.navigateBack()
+      }) 
     }
   }
 

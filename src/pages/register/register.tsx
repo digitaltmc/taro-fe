@@ -98,11 +98,15 @@ export default class Index extends Component {
   }
   getUserInfo(userInfo){
     if(userInfo.detail.userInfo){
-        Taro.setStorage(
-            {key: "userInfo", data: userInfo.detail.userInfo}
-        ).then( () => {
-            Taro.navigateBack()
-        }) 
+      const user= {
+        name: userInfo.detail.userInfo.nickName,
+        avatar: userInfo.detail.userInfo.avatarUrl
+      }
+      Taro.setStorage(
+          {key: "userInfo", data: user}
+      ).then( () => {
+          Taro.navigateBack()
+      }) 
     }
   }
 

@@ -43,9 +43,9 @@ export default class Index extends Component {
 
   componentWillUnmount() { }
 
-  componentDidShow() { 
-    const userInfo = requestWithLogin.getUserInfo()
+  componentDidShow() {  
     if (requestWithLogin.isLogin()){
+      const userInfo = requestWithLogin.getUserInfo()
       this.setState({
         userInfo: userInfo,
         islogin: true
@@ -75,10 +75,9 @@ export default class Index extends Component {
           password: "test"
       }
     }).then((data)=>{
-      const userid = data.data.login;
       Taro.showModal ({
         title: 'success',
-        content: data.data.login
+        content: 'call succcess'
       })
     }
   }
@@ -96,13 +95,13 @@ export default class Index extends Component {
       {this.state.islogin?
         <View className='panel'>
           <View className='avatar_panel'>
-            <AtAvatar className='avatar-panel__avatar' circle size="large" image={this.state.userInfo.avatarUrl }></AtAvatar>
+            <AtAvatar className='avatar-panel__avatar' circle size="large" image={this.state.userInfo.avatar }></AtAvatar>
           </View>
           <View className='panel__title'>用户信息</View>
           <View className='panel__content'>
             <View className='component-item'>
-              <AtInput name='username' title='姓名' type='text' value={this.state.userInfo.nickName} />
-              <AtInput name='phone' title='手机' type='phone' value={this.state.phone} />
+              <AtInput name='username' title='姓名' type='text' value={this.state.userInfo.name} />
+              <AtInput name='phone' title='手机' type='phone' value={this.state.userInfo.mobile} />
             </View>
           </View>
           <View className='panel__content'>

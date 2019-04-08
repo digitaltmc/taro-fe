@@ -75,16 +75,9 @@ export default class Index extends Component {
   }
 
   onClickBooking(role, operation) {
-    //TO-DO
-    Taro.getStorage({key:'userInfo'}).then(rst => {   //从缓存中获取用户信息
-      let user = {name: rst.data.nickName, avatar: rst.data.avatarUrl}
-      this.booking(user, role, operation)
-    }).catch (e =>{
-      //TO-DO 如何登录回来后自动预定
       requestWithLogin.withLogin().then( userInfo => {
         if(userInfo)this.booking(userInfo, role, operation)
       })
-    })
   }
 
   onChange = e => {

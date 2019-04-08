@@ -62,11 +62,15 @@ export default {
         // TO-DO
         try{
           const userInfo = await Taro.getUserInfo()
+          const user= {
+            name: userInfo.userInfo.nickName,
+            avatar: userInfo.userInfo.avatarUrl
+          }
           Taro.setStorage({
             key: "userInfo",
-            data: userInfo.userInfo
+            data: user
           })
-          return {name: userInfo.userInfo.nickName, avatar: userInfo.userInfo.avatarUrl}
+          return user
         }catch (error) {
           Taro.navigateTo({
             url: '/pages/register/register'
@@ -78,6 +82,8 @@ export default {
         Taro.navigateTo({
           url: '/pages/login/login'
         })
+      }else{
+        return this.getUserInfo();
       }
     }
   },

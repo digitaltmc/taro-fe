@@ -19,7 +19,7 @@ export default class BookItem extends Component {
       bookElement = (<AtButton type='primary' onClick={this.handleBooking}>预定</AtButton>)
     }
     //TO-DO 需要根据后端如何返回结果来调整判断是否为当前用户
-    else if (currentUser != null && currentUser != undefined && currentUser.nickName == this.props.user.name ){
+    else if (currentUser != null && currentUser != undefined && currentUser.id == this.props.user.id ){
       bookElement = (<AtButton type='primary' onClick={this.handleCancel} >取消</AtButton>)
     }
     else{
