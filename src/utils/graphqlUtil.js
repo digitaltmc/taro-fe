@@ -3,8 +3,8 @@ import Taro from '@tarojs/taro'
 import ApolloClient from "apollo-boost"
 import gql from "graphql-tag"
 import * as ApolloLinkHttp from 'apollo-link-http'
-//const base = "http://dt-be.herokuapp.com/";
-const base = "http://localhost:58080/";
+const base = "http://dt-be.herokuapp.com/";
+//const base = "http://localhost:58080/";
 const fetch = async (url, options) => {
     const fetch_options = {
         //isShowLoading: false,
