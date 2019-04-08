@@ -23,6 +23,7 @@ const config = {
     }
   },
   defineConstants: {
+    BASE_URL: '"https://dt-be.herokuapp.com/"'
   },
   copy: {
     patterns: [

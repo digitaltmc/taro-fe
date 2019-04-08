@@ -3,8 +3,7 @@ import Taro from '@tarojs/taro'
 import ApolloClient from "apollo-boost"
 import gql from "graphql-tag"
 import * as ApolloLinkHttp from 'apollo-link-http'
-const base = "http://dt-be.herokuapp.com/";
-//const base = "http://localhost:58080/";
+
 const fetch = async (url, options) => {
     const fetch_options = {
         //isShowLoading: false,
@@ -29,7 +28,7 @@ function injectFetcher(func) {
 ApolloLinkHttp.HttpLink = injectFetcher(ApolloLinkHttp.HttpLink)
 
 export const client = new ApolloClient({  
-    uri: base + "graphql"
+    uri: BASE_URL + "graphql"
 });
 
 export const QUERY_LOGIN = gql`  

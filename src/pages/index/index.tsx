@@ -41,15 +41,13 @@ export default class Index extends Component {
     )
   }
   
-  componentDidMount() { 
-    console.log("componentDidMount")
-  }
+  componentDidMount() { }
 
   componentWillUnmount() { }
 
-  componentDidShow() { console.log("componentDidShow")}
+  componentDidShow() { }
 
-  componentDidHide() { console.log("componentDidHide")}
+  componentDidHide() { }
   
   getMeetings() {
     // TO-DO
