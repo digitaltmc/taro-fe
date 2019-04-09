@@ -12,8 +12,8 @@ export default class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      meetings:[],
-      currentMeeting:null,
+      meetings: [],
+      currentMeeting: null,
       bookInfo: {}
     }
   }
@@ -34,28 +34,33 @@ export default class Index extends Component {
     let currentMeeting = meetings[0];
     let bookInfo = this.getBookInfo(currentMeeting.meetingId);
     this.setState(
-      { meetings: meetings,
+      {
+        meetings: meetings,
         currentMeeting: currentMeeting,
         bookInfo: bookInfo
       }
     )
   }
-  
-  componentDidMount() { 
-    console.log("componentDidMount")
-  }
+
+  componentDidMount() { }
 
   componentWillUnmount() { }
 
-  componentDidShow() { console.log("componentDidShow")}
+  componentDidShow() { }
 
-  componentDidHide() { console.log("componentDidHide")}
-  
+  componentDidHide() { }
+
   getMeetings() {
     Taro.request({
       url: 'https://dt-be.herokuapp.com/graphql',
-      // method: "POST",
-      data:  JSON.stringify({query: "{hello}"}),
+      method: 'POST',
+      // data:  JSON.stringify({query: '{hello}'}),
+      // data: JSON.stringify({query:'mutation {register(person:{name:"hello",password:"world",email:"aaa@sap.com",mobile:"888888"})}'}),
+      // data: JSON.stringify({query:'{login(user:"hello",password:"world")}'}),
+      data: JSON.stringify({
+        query:
+          'mutation {book(date: "2019-04-02T00:00:00Z", role: GE , title: "Hey buddy") {id date agenda {role title duration member{name mobile email id}}}}'
+      }),
       header: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
@@ -64,7 +69,7 @@ export default class Index extends Component {
       .then(res => console.log(res.data))
     return mockData.meetings
   }
-  getBookInfo (meetingId) {
+  getBookInfo(meetingId) {
     return mockData.bookInfos[meetingId]
   }
   booking(user, role, operation) {
@@ -72,27 +77,20 @@ export default class Index extends Component {
     let index = mockData.bookInfos[id].roles.findIndex((value, index, arr) => {
       return value.role == role
     })
-    if (operation == "book"){
+    if (operation == "book") {
       mockData.bookInfos[id].roles[index].user = user
-    }else if (operation == "cancel"){
+    } else if (operation == "cancel") {
       mockData.bookInfos[id].roles[index].user = null
-    } 
+    }
     let bookInfo = this.getBookInfo(id);
-    this.setState({ 
-        bookInfo: bookInfo
+    this.setState({
+      bookInfo: bookInfo
     })
   }
 
   onClickBooking(role, operation) {
-    //TO-DO
-    Taro.getStorage({key:'userInfo'}).then(rst => {   //从缓存中获取用户信息
-      let user = {name: rst.data.nickName, avatar: rst.data.avatarUrl}
-      this.booking(user, role, operation)
-    }).catch (e =>{
-      //TO-DO 如何登录回来后自动预订
-      requestWithLogin.login().then( userInfo => {
-        if(userInfo)this.booking(userInfo, role, operation)
-      })
+    requestWithLogin.withLogin().then(userInfo => {
+      if (userInfo) this.booking(userInfo, role, operation)
     })
   }
 
@@ -102,26 +100,26 @@ export default class Index extends Component {
       bookInfo: mockData.bookInfos[this.state.meetings[e.detail.value].meetingId]
     })
   }
-  render() { 
+  render() {
     let bookItems = this.state.bookInfo.roles;
-    return (   
+    return (
       <View className='page'>
         {/* S Header */}
         <MeetingHeader title='Toastermaster 会议预订' desc=''></MeetingHeader>
         <View className='panel'>
           <View className='panel__content'>
             <Picker mode='selector' range={this.state.meetings} rangeKey="meetingDate" onChange={this.onChange}>
-            <View className='demo-list-item'>
-                    <View className='demo-list-item__label'>会议时间</View>
-                    <View className='demo-list-item__value'>{this.state.currentMeeting.meetingDate}</View>
-                  </View>
+              <View className='demo-list-item'>
+                <View className='demo-list-item__label'>会议时间</View>
+                <View className='demo-list-item__value'>{this.state.currentMeeting.meetingDate}</View>
+              </View>
             </Picker>
           </View>
           <View className='panel__content'>
-            <BookForm bookItems = {bookItems} onClickBooking={this.onClickBooking.bind(this)}> </BookForm>
+            <BookForm bookItems={bookItems} onClickBooking={this.onClickBooking.bind(this)}> </BookForm>
           </View>
         </View>
-        <TabBar currentPage = "index" />
+        <TabBar currentPage="index" />
       </View>
     )
   }
