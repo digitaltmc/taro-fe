@@ -37,5 +37,17 @@ export default {
                         {role: "IE2", user: null},
                         {role: "IE3", user: null}]
                 }
-              }
+    },
+    roles:[
+        {role: "TMD", desc: null},
+        {role: "GE", desc: null},
+        {role: "TTM", desc: null},
+        {role: "Speaker1", desc: null},
+        {role: "Speaker2", desc: null},
+        {role: "Speaker1", desc: null},
+        {role: "Speaker3", desc: null},
+        {role: "IE1", desc: null},
+        {role: "IE2", desc: null},
+        {role: "IE3", desc: null}
+    ]
 }

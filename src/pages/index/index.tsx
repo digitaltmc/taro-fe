@@ -7,6 +7,7 @@ import TabBar from '../components/tab-bar'
 import BookForm from '../components/book-form';
 import requestWithLogin from '../../utils/requestsWithLogin'
 import mockData from '../../utils/mockData'
+import { client, QUERY_MEETING } from '../../utils/graphqlUtil'
 export default class Index extends Component {
 
   constructor() {
@@ -32,7 +33,7 @@ export default class Index extends Component {
   componentWillMount() {
     let meetings = this.getMeetings();
     let currentMeeting = meetings[0];
-    let bookInfo = this.getBookInfo(currentMeeting.meetingId);
+    let bookInfo = this.getBookInfo(currentMeeting);
     this.setState(
       {
         meetings: meetings,
@@ -51,29 +52,55 @@ export default class Index extends Component {
   componentDidHide() { }
 
   getMeetings() {
-    Taro.request({
-      url: 'https://dt-be.herokuapp.com/graphql',
-      method: 'POST',
-      // data:  JSON.stringify({query: '{hello}'}),
-      // data: JSON.stringify({query:'mutation {register(person:{name:"hello",password:"world",email:"aaa@sap.com",mobile:"888888"})}'}),
-      // data: JSON.stringify({query:'{login(user:"hello",password:"world")}'}),
-      data: JSON.stringify({
-        query:
-          'mutation {book(date: "2019-04-02T00:00:00Z", role: GE , title: "Hey buddy") {id date agenda {role title duration member{name mobile email id}}}}'
-      }),
-      header: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-      }
-    })
-      .then(res => console.log(res.data))
-    return mockData.meetings
+    const meetingday = 2;
+    const today = new Date();
+    const startday = today;
+    const week = today.getDay();
+    if ( week <= meetingday ) {
+      const dis = (meetingday - week);
+      startday.setDate(today.getDate() + dis);
+    } else {
+      const dis = 7 - (week - meetingday)
+      startday.setDate(today.getDate() + dis);
+    }
+    let meetings = new Array(4);
+    for(let i=0; i<4; i++){
+      meetings[i] = new Date();
+      meetings[i].setHours(11);
+      meetings[i].setMinutes(50);
+      meetings[i].setSeconds(0);
+      meetings[i].setDate(startday.getDate() + 7*i);
+    }
+    return meetings;
   }
-  getBookInfo(meetingId) {
-    return mockData.bookInfos[meetingId]
+  getBookInfo(meetingDate) {
+    let bookInfos = new Array(mockData.roles.length);
+    for (let i=0; i < mockData.roles.length; i++){
+      bookInfos[i]["role"] = mockData.roles[i].role;
+    }
+    client.query({
+      query: QUERY_MEETING,
+      variables: {
+          date: meetingDate
+      }
+    }).then((data)=>{
+      debugger;
+      const meeting = data.data.meeting;
+      if (meeting !== null && meeting.agenda !== null) {
+        
+      }else{
+        
+      }
+    }).catch((e) => {
+      
+      // this.setState({
+      //   text: "系统出错"
+      // });
+    })
+    //return mockData.bookInfos[meetingDate]
   }
   booking(user, role, operation) {
-    let id = this.state.currentMeeting.meetingId;
+    let date = this.state.currentMeeting;
     let index = mockData.bookInfos[id].roles.findIndex((value, index, arr) => {
       return value.role == role
     })
@@ -101,7 +128,7 @@ export default class Index extends Component {
     })
   }
   render() {
-    let bookItems = this.state.bookInfo.roles;
+    let bookItems = this.state.bookInfo;
     return (
       <View className='page'>
         {/* S Header */}

@@ -9,7 +9,7 @@ export default class BookForm extends Component {
     return (
       <View>
         {this.props.bookItems.map((singleItem) => (
-          <BookItem role={singleItem.role} user={singleItem.user} onClickBooking={this.props.onClickBooking}></BookItem>
+          <BookItem key={singleItem.role} role={singleItem.role} user={singleItem.user} onClickBooking={this.props.onClickBooking}></BookItem>
         ))}
       </View>
     )

@@ -31,7 +31,7 @@ export const client = new ApolloClient({
     uri: BASE_URL + "graphql"
 });
 
-export const QUERY_LOGIN = gql`  
+export const QUERY_LOGIN = gql`
     query Login( $user: String!, $password: String! ) {
         login( user: $user, password: $password ){
             id
@@ -41,8 +41,47 @@ export const QUERY_LOGIN = gql`
         }
     }
 `
-export const MUTATION_REGISTER = gql`  
+export const MUTATION_REGISTER = gql`
     mutation Register ( $name: String!, $password: String!, $email: String!, $mobile: String ) {
         register( person: {name: $name, password: $password, email: $email, mobile: $mobile} )
     }
+`
+export const QUERY_MEETING = gql`
+    query Meeting ($date: Time!) {
+        meeting( date: $date ){
+            id
+            agenda{
+                role
+                title
+                duration
+                member{
+                    name
+                    mobile
+                    email
+                    id
+                }   
+            }
+            date
+        }
+    }
+`
+export const MUTATION_BOOKING = gql`
+    mutation ( $date: Time!, $role: String! ){
+        book(date: $date, role: $role) {
+            id
+            date
+            agenda {
+                role
+                title
+                duration
+                member{
+                    name
+                    mobile
+                    email
+                    id
+                }
+            }
+        }
+    }
+      
 `
