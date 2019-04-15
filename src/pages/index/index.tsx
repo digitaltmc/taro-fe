@@ -74,10 +74,13 @@ export default class Index extends Component {
     return meetings;
   }
   getBookInfo(meetingDate) {
-    let bookInfos = new Array(mockData.roles.length);
-    for (let i=0; i < mockData.roles.length; i++){
-      bookInfos[i]["role"] = mockData.roles[i].role;
-    }
+    let bookInfos = [];
+    mockData.roles.forEach((role) => {
+      bookInfos.push({ "role": role.role });
+    });
+    // for (let i=0; i < mockData.roles.length; i++){
+    //   bookInfos[i]["role"] = mockData.roles[i].role;
+    // }
     client.query({
       query: QUERY_MEETING,
       variables: {
@@ -87,7 +90,10 @@ export default class Index extends Component {
       debugger;
       const meeting = data.data.meeting;
       if (meeting !== null && meeting.agenda !== null) {
-        
+        bookInfos.map(itm => ({
+          ...meeting.agenda.find((item) => (item.role === itm.role) && item),
+          ...itm
+        }));
       }else{
         
       }
